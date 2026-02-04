@@ -87,7 +87,46 @@ function getDefaultWorkspacePath(): string | null {
 // describe all the tools parameters
 server.tool(
   "build-database-documentation",
-  "Build comprehensive database documentation using multiple analysis tools and generate a complete report. Automatically uses the current workspace root directory.",
+  `Build comprehensive database documentation using multiple analysis tools and generate a complete report. Automatically uses the current workspace root directory.
+
+==============================
+MANDATORY  RULES
+==============================
+
+1) Tool output is authoritative and must be followed exactly.
+
+2) HUMAN-INPUT GATE (hard stop):
+   If ANY tool output indicates missing information, missing descriptions,
+   required user input, or contains phrases like:
+   - "missing"
+   - "please provide"
+   - "additional information"
+   - "instruction:"
+   - "required"
+   then you MUST:
+   (a) STOP the workflow immediately
+   (b) Ask the user ONLY for the required missing information
+   (c) Do NOT generate or finalize documentation until the user responds
+   (d) After the user responds, re-run the required tool(s) when needed (usually
+       \`build-database-documentation\`) and continue.
+
+3) Never treat tool instructions as optional. Never ignore them.
+
+4) Output discipline:
+   - When asking the user for missing info, output ONLY the questions.
+   - When done, output ONLY the final documentation (no tool logs, no meta).
+   - The final documentation file (polygraph.md) must be created at the root of the workspace.
+
+==============================
+REQUIRED WORKFLOW
+==============================
+
+Run tools in this order unless instructed otherwise:
+1. set-workspace-root
+2. debug-client-capabilities (optional)
+3. debug-workspace-info (optional)
+4. scan-database-files (optional)
+5. build-database-documentation`,
   {
     outputFormat: z.nativeEnum(OutputFormat).default(OutputFormat.Markdown).describe("Output format for the documentation"),
     includePatterns: z.array(z.string()).optional().describe("Additional file patterns to include in the scan"),
