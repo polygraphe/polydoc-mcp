@@ -85,9 +85,10 @@ function getDefaultWorkspacePath(): string | null {
 //-------------------------------------------------------------------------------------------------------------------------------
 // Register the comprehensive tool for building database documentation with elicitation loop
 // describe all the tools parameters
-server.tool(
-  "build-database-documentation",
-  `Build comprehensive database documentation using multiple analysis tools and generate a complete report. Automatically uses the current workspace root directory.
+
+const buildDatabaseDocumentationToolDescription = `
+Build comprehensive database documentation using multiple analysis tools and generate a complete report. 
+Automatically writes exactly one file named \`polygraph.md\` at the workspace root.
 
 ==============================
 MANDATORY  RULES
@@ -115,7 +116,6 @@ MANDATORY  RULES
 4) Output discipline:
    - When asking the user for missing info, output ONLY the questions.
    - When done, output ONLY the final documentation (no tool logs, no meta).
-   - The final documentation file (polygraph.md) must be created at the root of the workspace.
 
 ==============================
 REQUIRED WORKFLOW
@@ -126,7 +126,21 @@ Run tools in this order unless instructed otherwise:
 2. debug-client-capabilities (optional)
 3. debug-workspace-info (optional)
 4. scan-database-files (optional)
-5. build-database-documentation`,
+5. build-database-documentation
+
+==============================
+TASK
+==============================
+
+Generate comprehensive database documentation for the current workspace.
+
+If the tool requests additional info (Human-Input Gate), ask the user for it,
+then re-run \`build-database-documentation\` and finish.
+`;
+
+server.tool(
+  "build-database-documentation",
+  buildDatabaseDocumentationToolDescription,
   {
     outputFormat: z.nativeEnum(OutputFormat).default(OutputFormat.Markdown).describe("Output format for the documentation"),
     includePatterns: z.array(z.string()).optional().describe("Additional file patterns to include in the scan"),
