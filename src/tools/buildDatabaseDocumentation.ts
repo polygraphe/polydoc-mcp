@@ -62,6 +62,8 @@ export async function buildDatabaseDocumentation(params: {
       extractedTableDescriptions = { ...extractedTableDescriptions, ...toolKnownTables };
   }
 
+  // Test comment
+
   logger.info(`🔨 Starting database documentation build tool`);
   logger.debug(`Build parameters: ${JSON.stringify({ workspaceRootpath, toolOutputFormat })}`);
   logger.debug(`Client capabilities: elicitation=${clientSupportsElicitation}, filelist=${filelist}, fileread=${fileread}`);
