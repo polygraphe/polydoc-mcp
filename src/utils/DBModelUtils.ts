@@ -16,7 +16,7 @@ export class DBModelUtils {
    * @param similarityThreshold Threshold for considering entities similar (default: 0.7)
    * @returns Updated scan data with duplicates marked
    */
-  static modelDeduplicate(scanData: ScanResult, similarityThreshold: number = 0.7): ScanResult {
+  static modelDeduplicate(scanData: ScanResult, similarityThreshold: number): ScanResult {
     logger.info('🔍 Starting model deduplication process');
     logger.debug(`Using similarity threshold: ${similarityThreshold}`);
     
