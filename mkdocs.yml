@@ -1,0 +1,25 @@
+site_name: ADK Integration Test
+site_url: https://example.com/adk-docs/
+theme:
+  name: material
+  features:
+    - content.code.copy
+    - content.tabs.link
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+
+nav:
+  - Home: index.md
+  - Integrations:
+    - Polydoc: integrations/polydoc.md
+
+extra_css:
+  - stylesheets/extra.css

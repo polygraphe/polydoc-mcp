@@ -49,3 +49,6 @@ jspm_packages/
 # Temporary folders
 tmp/
 temp/
+
+# Kiro IDE files
+.kiro/
