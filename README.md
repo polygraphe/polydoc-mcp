@@ -26,7 +26,7 @@ An MCP (Model Context Protocol) server that scans your codebase to automatically
 1. Clone and install dependencies:
 ```bash
 git clone <repository-url>
-cd polydoc
+cd polydoc-mcp
 npm install
 ```
 
