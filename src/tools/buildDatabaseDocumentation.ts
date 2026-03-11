@@ -24,6 +24,7 @@ export async function buildDatabaseDocumentation(params: {
   workspaceRootpath: string;
   toolOutputFormat: OutputFormat;
   toolIncludePatterns?: string[];
+  toolSimilarityThreshold: number;
   toolKnownTables?: Record<string, string>;
   toolAnalysisOptions?: {
     includeRelationshipDiagram?: boolean;
@@ -43,6 +44,7 @@ export async function buildDatabaseDocumentation(params: {
     workspaceRootpath, 
     toolOutputFormat, 
     toolIncludePatterns, 
+    toolSimilarityThreshold,
     toolKnownTables, 
     toolAnalysisOptions = {}, 
     toolTableDescriptions = {}, 
@@ -102,7 +104,7 @@ export async function buildDatabaseDocumentation(params: {
     
     // Step 3: Deduplicate database models
     logger.info('🔄 Removing duplicate database entities');
-    scanData = DBModelUtils.modelDeduplicate(scanData);
+    scanData = DBModelUtils.modelDeduplicate(scanData, toolSimilarityThreshold);
     logger.info(`📊 After deduplication: ${scanData.databaseModel.entries.length} total entities (${scanData.databaseModel.entries.filter(entry => entry.table.isDuplicate === true).length} duplicates marked)`);
     
     if (scanData.databaseModel.entries.length === 0) {
@@ -230,6 +232,9 @@ export async function buildDatabaseDocumentation(params: {
     // Default: Markdown format
     logger.info('Creating Markdown documentation output');
     
+    // Filter out duplicate entities
+    const filteredEntities = scanData.entities.filter(entity => entity.isDuplicate !== true);
+    
     // Build file analysis data from scan results
     const fileAnalysis = scanData.scannedFiles.map(filePath => {
       // Count entities found in this specific file
@@ -251,7 +256,7 @@ export async function buildDatabaseDocumentation(params: {
     
     const markdownResult = generateMarkdownDocumentation(
       inferredProjectName, 
-      scanData.entities, 
+      filteredEntities, 
       metrics, 
       fileTree, 
       fileAnalysis, // Now providing proper file analysis data

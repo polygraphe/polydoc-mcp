@@ -91,6 +91,12 @@ server.tool(
   {
     outputFormat: z.nativeEnum(OutputFormat).default(OutputFormat.Markdown).describe("Output format for the documentation"),
     includePatterns: z.array(z.string()).optional().describe("Additional file patterns to include in the scan"),
+    similarityThreshold: z
+    .number()
+    .min(0)
+    .max(1)
+    .default(0.7)
+    .describe("Similarity threshold for deduplication"),
     knownTables: z
     .record(
       z.string().min(1),
@@ -108,7 +114,7 @@ server.tool(
       includePerformanceHints: z.boolean().default(false).describe("Include performance optimization hints (future feature)")
     }).optional().describe("Analysis options to customize the documentation output")
   },
-  async ({ outputFormat, includePatterns, knownTables, analysisOptions = {} }) => {
+  async ({ outputFormat, includePatterns, similarityThreshold, knownTables, analysisOptions = {} }) => {
     // Use workspace root (required)
     const effectiveProjectPath = getDefaultWorkspacePath();
     
@@ -133,6 +139,7 @@ server.tool(
       workspaceRootpath: effectiveProjectPath,
       toolOutputFormat: outputFormat,
       toolIncludePatterns: includePatterns,
+      toolSimilarityThreshold: similarityThreshold,
       toolKnownTables: knownTables,
       toolAnalysisOptions: analysisOptions,
       clientSupportsElicitation: clientSupportsElicitation,
