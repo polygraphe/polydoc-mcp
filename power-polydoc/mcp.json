@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "polydoc-database-docs": {
+      "command": "node",
+      "args": ["build/polydoc.js"],
+      "env": {
+        "NODE_ENV": "production",
+        "POLYDOC_LOG_LEVEL": "info"
+      }
+    }
+  }
+}
