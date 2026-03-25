@@ -6,7 +6,7 @@ import { generateMarkdownDocumentation } from "../common/formatters/markdownForm
 import { config, getConfigSummary, getErrorMessage, isMetricsEnabled, logger } from "../config.js";
 import { ScanResult } from "../domain/models/fileScanModels.js";
 import { OutputFormat } from "../domain/OutputFormat.js";
-import { DBModelUtils } from "../utils/DBModelUtils";
+import { DBModelUtils } from "../utils/DBModelUtils.js";
 import { PromptBuilder } from "./PromptBuilder.js";
 
 /**

@@ -1,4 +1,4 @@
-import { DatabaseModel, DatabaseTable } from "./databaseModels";
+import { DatabaseModel, DatabaseTable } from "./databaseModels.js";
 
 /**
  * Result type for the database scan operation

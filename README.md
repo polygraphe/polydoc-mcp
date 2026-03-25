@@ -22,10 +22,48 @@ An MCP (Model Context Protocol) server that scans your codebase to automatically
 
 ## Installation & Setup
 
-### Option 1: Cursor IDE (Recommended)
+### Option 1: Kiro Power (Recommended)
+
+Polydoc is available as a Kiro Power, which bundles the MCP server, steering files, and hooks for a seamless experience.
+
+1. Open Kiro and go to the Powers panel (click the Powers icon in the sidebar)
+2. Click "Add Custom Power"
+3. Select "Import from URL" and paste the repository URL:
+   ```
+   https://github.com/polygraphe/polydoc-mcp.git
+   ```
+4. Kiro will install the power automatically. You should see "polydoc-mcp" listed under Installed powers with its description.
+
+Once installed, the power provides:
+- The `polydoc-database-docs` MCP server with all documentation tools
+- Steering files that guide the agent through the documentation workflow
+- A recommended hook for on-demand documentation generation
+
+To use it, simply ask Kiro:
+```
+Generate database documentation for this workspace
+```
+
+Or trigger the "Generate Database Documentation" hook from the Agent Hooks panel.
+
+#### Power Structure
+
+Kiro expects the power definition files at the root of the repository:
+
+```
+/POWER.md          # Power metadata (name, description, keywords) and onboarding steps
+/mcp.json          # MCP server configuration
+/steering/         # Agent steering files
+  generate-docs-workflow.md
+  schema-best-practices.md
+```
+
+> **Note**: If you're developing a Kiro Power, the `POWER.md`, `mcp.json`, and `steering/` directory must be at the repo root. Nesting them in a subdirectory will prevent Kiro from reading the power metadata.
+
+### Option 2: Cursor IDE
 1. Clone and install dependencies:
 ```bash
-git clone <repository-url>
+git clone https://github.com/polygraphe/polydoc-mcp.git
 cd polydoc-mcp
 npm install
 ```
@@ -43,7 +81,7 @@ npm run dev:run
 4. **Manual Configuration** (if needed):
    - Open Cursor IDE Settings
    - Click on 'Tools & MCP' in the left sidebar
-   - Click on "New MCP Server" - this will open the `mcp.json` file
+   - Click on "New MCP Server" — this will open the `mcp.json` file
    - Add the MCP server configuration:
    ```json
    {
@@ -56,11 +94,11 @@ npm run dev:run
    }
    ```
 
-4. **Restart Cursor IDE** completely
+5. **Restart Cursor IDE** completely
 
 **Note**: Cursor uses a dedicated `mcp.json` file for MCP server configuration, not the main `settings.json` file.
 
-### Option 2: Manual Configuration
+### Option 3: Manual Configuration
 Add to your MCP client configuration:
 ```json
 {

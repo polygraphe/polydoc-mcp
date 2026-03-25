@@ -4,8 +4,8 @@
  */
 
 import * as path from 'path';
-import { Logger, LogLevel } from "./common/Logger";
-import { EnumUtils } from "./utils/EnumUtils";
+import { Logger, LogLevel } from "./common/Logger.js";
+import { EnumUtils } from "./utils/EnumUtils.js";
 
 export const POLYDOC_VERSION = "1.0.0";
 
