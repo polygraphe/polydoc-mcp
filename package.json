@@ -10,6 +10,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node build/polydoc.js",
+    "start:stdio": "node build/polydoc-stdio.js",
     "dev": "tsc --watch",
     "dev:run": "tsx watch src/polydoc.ts"
   },

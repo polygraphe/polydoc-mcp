@@ -27,17 +27,29 @@ npm install
 npm run build
 ```
 
-This compiles the TypeScript source into `build/polydoc.js`.
+This compiles the TypeScript source into `build/polydoc.js` and `build/polydoc-stdio.js`.
 
-## Step 3: Start the server
+## Step 3: MCP configuration
 
-Start the Polydoc MCP server:
+The server uses stdio transport by default, so Kiro manages the server lifecycle automatically — no manual start needed. The MCP config in `.kiro/settings/mcp.json` should look like:
 
-```bash
-npm start
+```json
+{
+  "mcpServers": {
+    "polydoc-database-docs": {
+      "command": "node",
+      "args": ["build/polydoc-stdio.js"],
+      "env": {
+        "NODE_ENV": "production",
+        "POLYDOC_LOG_LEVEL": "info",
+        "POLYDOC_ENABLE_DETAILED_ERRORS": "false"
+      }
+    }
+  }
+}
 ```
 
-The server listens on `http://localhost:3000/mcp` by default.
+Alternatively, you can run the HTTP server manually with `npm start` (listens on `http://localhost:3000/mcp`), but the stdio approach is recommended since it eliminates the need to manually start/reconnect the server.
 
 ## Step 4: Add hooks
 
