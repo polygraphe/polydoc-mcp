@@ -1,11 +1,11 @@
 {
   "mcpServers": {
     "polydoc-database-docs": {
-      "command": "node",
-      "args": ["build/polydoc.js"],
+      "url": "http://localhost:3000/mcp",
       "env": {
         "NODE_ENV": "production",
-        "POLYDOC_LOG_LEVEL": "info"
+        "POLYDOC_LOG_LEVEL": "info",
+        "POLYDOC_ENABLE_DETAILED_ERRORS": "false"
       }
     }
   }
