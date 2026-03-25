@@ -31,14 +31,23 @@ This compiles the TypeScript source into `build/polydoc.js` and `build/polydoc-s
 
 ## Step 3: MCP configuration
 
-The server uses stdio transport by default, so Kiro manages the server lifecycle automatically — no manual start needed. The MCP config in `.kiro/settings/mcp.json` should look like:
+The server uses stdio transport by default, so Kiro manages the server lifecycle automatically — no manual start needed.
+
+**IMPORTANT:** The `args` path in the MCP config MUST be an absolute path to `build/polydoc-stdio.js` so the power works from any workspace. A relative path will break when the user opens a different project.
+
+During onboarding, you MUST:
+1. Run `pwd` in the power's directory to get the current absolute path
+2. Construct the full path by appending `/build/polydoc-stdio.js` to the result
+3. Write that absolute path into the user-level MCP config at `~/.kiro/settings/mcp.json`
+
+The resulting MCP config entry should look like this (where `<POWER_DIR>` is replaced by the actual `pwd` output):
 
 ```json
 {
   "mcpServers": {
     "polydoc-database-docs": {
       "command": "node",
-      "args": ["build/polydoc-stdio.js"],
+      "args": ["<POWER_DIR>/build/polydoc-stdio.js"],
       "env": {
         "NODE_ENV": "production",
         "POLYDOC_LOG_LEVEL": "info",
@@ -48,6 +57,8 @@ The server uses stdio transport by default, so Kiro manages the server lifecycle
   }
 }
 ```
+
+Do NOT hardcode any specific user path in the repository files. The resolution must happen dynamically at onboarding time.
 
 Alternatively, you can run the HTTP server manually with `npm start` (listens on `http://localhost:3000/mcp`), but the stdio approach is recommended since it eliminates the need to manually start/reconnect the server.
 
