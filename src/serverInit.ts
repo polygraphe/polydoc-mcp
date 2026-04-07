@@ -96,25 +96,9 @@ MANDATORY  RULES
 
 1) Tool output is authoritative and must be followed exactly.
 
-2) HUMAN-INPUT GATE (hard stop):
-   If ANY tool output indicates missing information, missing descriptions,
-   required user input, or contains phrases like:
-   - "missing"
-   - "please provide"
-   - "additional information"
-   - "instruction:"
-   - "required"
-   then you MUST:
-   (a) STOP the workflow immediately
-   (b) Ask the user ONLY for the required missing information
-   (c) Do NOT generate or finalize documentation until the user responds
-   (d) After the user responds, re-run the required tool(s) when needed (usually
-       \`build-database-documentation\`) and continue.
+2) Never treat tool instructions as optional. Never ignore them.
 
-3) Never treat tool instructions as optional. Never ignore them.
-
-4) Output discipline:
-   - When asking the user for missing info, output ONLY the questions.
+3) Output discipline:
    - When done, output ONLY the final documentation (no tool logs, no meta).
 
 ==============================
@@ -134,7 +118,7 @@ TASK
 
 Generate comprehensive database documentation for the current workspace.
 
-If the tool requests additional info (Human-Input Gate), ask the user for it,
+If the tool requests additional info, generate it with information found in the project, 
 then re-run \`build-database-documentation\` and finish.
 `;
 
