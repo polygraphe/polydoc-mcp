@@ -118,7 +118,7 @@ TASK
 
 Generate comprehensive database documentation for the current workspace.
 
-If the tool requests additional info, generate it with information found in the project, 
+If the tool requests additional info, generate it with information found in the project and add a tag [AI-generated] in front of what has been generated, 
 then re-run \`build-database-documentation\` and finish.
 `;
 
